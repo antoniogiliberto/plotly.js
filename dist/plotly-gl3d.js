@@ -1,5 +1,5 @@
 /**
-* plotly.js (gl3d) v1.53.0
+* plotly.js (gl3d) v1.54.1
 * Copyright 2012-2020, Plotly, Inc.
 * All rights reserved.
 * Licensed under the MIT license
@@ -68796,32 +68796,114 @@ function setupDragElement(rangeSlider, gd, axisOpts, opts) {
         var minVal = opts.d2p(axisOpts._rl[0]);
         var maxVal = opts.d2p(axisOpts._rl[1]);
 
+        let startedSmaller
+        let minWidth = axisOpts._input.rangeslider.minWidth
+        /**
+         * if the bar was already smaller than the minWidth when the drag started,
+         * then minWidth will be the actual width
+         */
+        if(minWidth && (maxVal - minVal < minWidth)){
+            minWidth = maxVal - minVal
+        }
+
+        console.log(startedSmaller)
         var dragCover = dragElement.coverSlip();
 
-        dragCover.addEventListener('mousemove', mouseMove);
-        dragCover.addEventListener('mouseup', mouseUp);
 
-        function mouseMove(e) {
+
+        const mouseMove = (e) => {
             var delta = +e.clientX - startX;
             var pixelMin, pixelMax, cursor;
 
             switch(target) {
                 case slideBox:
+
                     cursor = 'ew-resize';
-                    pixelMin = minVal + delta;
-                    pixelMax = maxVal + delta;
+                    /** based on delta, new width would be: */
+
+                    if(delta < 0){ // dragging to the left
+                        var nextWidth = (maxVal + delta) - (Math.max(minVal + delta, 0))
+                        pixelMin = Math.max(minVal + delta, 0);
+
+                        if(minWidth && nextWidth < minWidth){
+                            pixelMax = pixelMin + minWidth;
+                        } else {
+                            pixelMax = maxVal + delta;
+                        }
+                        /**
+                         * if while dragging i exceeded the minWidth and the minWidth is still smaller then
+                         * the original minWidth set in the configuration, then i update the minWidth value
+                         */
+                        if(minWidth && Math.abs(pixelMax - pixelMin) > minWidth){
+                            minWidth = Math.min(Math.abs(pixelMax - pixelMin), axisOpts._input.rangeslider.minWidth)
+                        }
+                    } else { // dragging to the right
+                        var nextWidth = Math.min(maxVal + delta, rangeSlider.node().getBoundingClientRect().width) - (minVal + delta)
+
+                        pixelMax = Math.min(maxVal + delta, rangeSlider.node().getBoundingClientRect().width);
+
+                        if(minWidth && nextWidth < minWidth){
+                            pixelMin = pixelMax - minWidth;
+                        } else {
+                            pixelMin = minVal + delta;
+                        }
+
+                        /**
+                         * if while dragging i exceeded the minWidth and the minWidth is still smaller then
+                         * the original minWidth set in the configuration, then i update the minWidth value
+                         */
+                        if(minWidth && Math.abs(pixelMax - pixelMin) > minWidth){
+                            minWidth = Math.min(Math.abs(pixelMax - pixelMin), axisOpts._input.rangeslider.minWidth)
+                        }
+                    }
+
+
                     break;
 
                 case grabAreaMin:
                     cursor = 'col-resize';
-                    pixelMin = minVal + delta;
                     pixelMax = maxVal;
+
+                    /** based on delta, new width would be: */
+                    var nextWidth = maxVal - minVal - delta
+
+                    if(minWidth && nextWidth < minWidth){
+                        pixelMin = maxVal - minWidth;
+                    } else {
+                        pixelMin = minVal + delta;
+                    }
+
+                    /**
+                     * if while dragging i exceeded the minWidth and the minWidth is still smaller then
+                     * the original minWidth set in the configuration, then i update the minWidth value
+                     */
+                    if(minWidth && Math.abs(pixelMax - pixelMin) > minWidth){
+                        minWidth = Math.min(Math.abs(pixelMax - pixelMin), axisOpts._input.rangeslider.minWidth)
+                    }
+
+
+
                     break;
 
                 case grabAreaMax:
                     cursor = 'col-resize';
                     pixelMin = minVal;
-                    pixelMax = maxVal + delta;
+                    /** based on delta, new width would be: */
+                    var nextWidth = maxVal - minVal + delta
+
+                    if(minWidth && nextWidth < minWidth){
+                        pixelMax = minVal + minWidth;
+                    } else {
+                        pixelMax = maxVal + delta;
+                    }
+                    /**
+                     * if while dragging i exceeded the minWidth and the minWidth is still smaller then
+                     * the original minWidth set in the configuration, then i update the minWidth value
+                     */
+                    if(minWidth && Math.abs(pixelMax - pixelMin) > minWidth){
+                        minWidth = Math.min(Math.abs(pixelMax - pixelMin), axisOpts._input.rangeslider.minWidth)
+                    }
+
                     break;
 
                 default:
@@ -68849,6 +68931,9 @@ function setupDragElement(rangeSlider, gd, axisOpts, opts) {
             dragCover.removeEventListener('mouseup', mouseUp);
             Lib.removeElement(dragCover);
         }
+
+        dragCover.addEventListener('mousemove', mouseMove);
+        dragCover.addEventListener('mouseup', mouseUp);
     });
 }
 
@@ -118655,7 +118740,7 @@ module.exports = {
 'use strict';
 
 // package version injected by `npm run preprocess`
-exports.version = '1.53.0';
+exports.version = '1.54.1';
 
 },{}]},{},[4])(4)
 });
