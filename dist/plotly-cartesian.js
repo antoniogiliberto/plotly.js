@@ -1,5 +1,5 @@
 /**
-* plotly.js (cartesian) v1.54.2
+* plotly.js (cartesian) v1.54.3
 * Copyright 2012-2020, Plotly, Inc.
 * All rights reserved.
 * Licensed under the MIT license
@@ -51380,7 +51380,7 @@ axes.calcTicks = function calcTicks(ax) {
     generateTicks();
     /** will try to limit the ticks based on the available width */
     if(axLetter === 'x' && isNumeric(ax.dtick)){
-        var maxTicks = ax._length / 60;
+        var maxTicks = ax._length / 56;
         if(tickVals.length > maxTicks){
             ax.dtick *= 2;
             generateTicks();
@@ -53302,7 +53302,9 @@ axes.drawLabels = function(gd, ax, opts) {
                     .call(Drawing.font, d.font, d.fontSize, d.fontColor)
                     .text(d.text)
                     .call(svgTextUtils.convertToTspans, gd);
-
+                if(ax._input.tickExtraCls && (typeof ax._input.tickExtraCls === 'function')) {
+                    thisLabel.attr('class', function(d) { return ax._input.tickExtraCls(d, ax); });
+                }
                 if(gd._promises[newPromise]) {
                     // if we have an async label, we'll deal with that
                     // all here so take it out of gd._promises and
@@ -88116,7 +88118,7 @@ module.exports = function style(gd) {
 'use strict';
 
 // package version injected by `npm run preprocess`
-exports.version = '1.54.2';
+exports.version = '1.54.3';
 
 },{}]},{},[11])(11)
 });

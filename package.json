@@ -1,6 +1,6 @@
 {
   "name": "@giliweb/plotly.js",
-  "version": "1.54.2",
+  "version": "1.54.3",
   "description": "The open source javascript graphing library that powers plotly",
   "license": "MIT",
   "main": "./dist/plotly.js",
@@ -43,7 +43,8 @@
     "version": "npm run build && git add -A dist src build",
     "postversion": "node -e \"console.log('Version bumped and committed. If ok, run: git push && git push --tags')\"",
     "postpublish": "node tasks/sync_packages.js",
-    "postshrinkwrap": "chttps ."
+    "postshrinkwrap": "chttps .",
+    "publish": "npm publish --access=public"
   },
   "browserify": {
     "transform": [
