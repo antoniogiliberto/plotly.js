@@ -1,5 +1,5 @@
 /**
-* plotly.js (finance) v1.54.1
+* plotly.js (finance) v1.54.2
 * Copyright 2012-2020, Plotly, Inc.
 * All rights reserved.
 * Licensed under the MIT license
@@ -51282,7 +51282,7 @@ axes.prepTicks = function(ax) {
 axes.calcTicks = function calcTicks(ax) {
     axes.prepTicks(ax);
     var rng = Lib.simpleMap(ax.range, ax.r2l);
-
+    var axLetter = ax._id.charAt(0);
     // now that we've figured out the auto values for formatting
     // in case we're missing some ticktext, we can break out for array ticks
     if(ax.tickmode === 'array') return arrayTicks(ax);
@@ -51334,6 +51334,19 @@ axes.calcTicks = function calcTicks(ax) {
     }
 
     generateTicks();
+    /** will try to limit the ticks based on the available width */
+    if(axLetter === 'x' && isNumeric(ax.dtick)){
+        var maxTicks = ax._length / 60;
+        if(tickVals.length > maxTicks){
+            ax.dtick *= 2;
+            generateTicks();
+            /** try one last time */
+            if(tickVals.length > maxTicks){
+                ax.dtick *= 4;
+                generateTicks();
+            }
+        }
+    }
 
     if(ax.rangebreaks) {
         // replace ticks inside breaks that would get a tick
@@ -84010,7 +84023,7 @@ module.exports = {
 'use strict';
 
 // package version injected by `npm run preprocess`
-exports.version = '1.54.1';
+exports.version = '1.54.2';
 
 },{}]},{},[8])(8)
 });
