@@ -1,5 +1,5 @@
 /**
-* plotly.js (basic) v1.54.3
+* plotly.js (basic) v1.54.5
 * Copyright 2012-2020, Plotly, Inc.
 * All rights reserved.
 * Licensed under the MIT license
@@ -29884,8 +29884,7 @@ function setupDragElement(rangeSlider, gd, axisOpts, opts) {
         var minVal = opts.d2p(axisOpts._rl[0]);
         var maxVal = opts.d2p(axisOpts._rl[1]);
 
-        let startedSmaller
-        let minWidth = axisOpts._input.rangeslider.minWidth
+        var minWidth = axisOpts._input.rangeslider.minWidth
         /**
          * if the bar was already smaller than the minWidth when the drag started,
          * then minWidth will be the actual width
@@ -29894,15 +29893,16 @@ function setupDragElement(rangeSlider, gd, axisOpts, opts) {
             minWidth = maxVal - minVal
         }
 
-        console.log(startedSmaller)
         var dragCover = dragElement.coverSlip();
 
-
-
         const mouseMove = (e) => {
+            gd.draggingRangeSlider = true
             var delta = +e.clientX - startX;
             var pixelMin, pixelMax, cursor;
 
+            if(axisOpts._input.rangeslider.unresizeable){
+                target = slideBox
+            }
             switch(target) {
                 case slideBox:
 
@@ -30015,6 +30015,7 @@ function setupDragElement(rangeSlider, gd, axisOpts, opts) {
         }
 
         function mouseUp() {
+            gd.draggingRangeSlider = false
             dragCover.removeEventListener('mousemove', mouseMove);
             dragCover.removeEventListener('mouseup', mouseUp);
             Lib.removeElement(dragCover);
@@ -30056,16 +30057,34 @@ function setPixelRange(rangeSlider, gd, axisOpts, opts, oppAxisOpts, oppAxisRang
     var pixelMin = clamp(opts.d2p(axisOpts._rl[0]));
     var pixelMax = clamp(opts.d2p(axisOpts._rl[1]));
 
+    /**
+     * if there's a minimum width for the cursor and the next width it's gonna
+     */
+    var applyTranslation = true
+    var oldSliderBoxWidth = parseInt(rangeSlider.select('rect.' + constants.slideBoxClassName).attr('width'))
+    if(axisOpts._input.rangeslider.minWidth && axisOpts._input.rangeslider.minWidth > pixelMax - pixelMin){
+        var minWidth = axisOpts._input.rangeslider.minWidth
+        var mid = pixelMin + (pixelMax - pixelMin) / 2
+        pixelMin = mid - (minWidth / 2)
+        pixelMax = mid + (minWidth / 2)
+        applyTranslation = false
+    }
     rangeSlider.select('rect.' + constants.slideBoxClassName)
-        .attr('x', pixelMin)
         .attr('width', pixelMax - pixelMin);
+    if(applyTranslation || gd.draggingRangeSlider || oldSliderBoxWidth > minWidth){
+        rangeSlider.select('rect.' + constants.slideBoxClassName)
+            .attr('x', pixelMin);
+    }
+
+    var sliderBoxRealX = parseInt(rangeSlider.select('rect.' + constants.slideBoxClassName).attr('x'))
+    var sliderBoxRealWidth = parseInt(rangeSlider.select('rect.' + constants.slideBoxClassName).attr('width'))
 
     rangeSlider.select('rect.' + constants.maskMinClassName)
-        .attr('width', pixelMin);
+        .attr('width', sliderBoxRealX);
 
     rangeSlider.select('rect.' + constants.maskMaxClassName)
-        .attr('x', pixelMax)
-        .attr('width', opts._width - pixelMax);
+        .attr('x', sliderBoxRealX + sliderBoxRealWidth)
+        .attr('width', opts._width - (sliderBoxRealX + sliderBoxRealWidth));
 
     if(oppAxisRangeOpts.rangemode !== 'match') {
         var pixelMinOppAxis = opts._height - clampOppAxis(opts.d2pOppAxis(oppAxisOpts._rl[1]));
@@ -30090,8 +30109,8 @@ function setPixelRange(rangeSlider, gd, axisOpts, opts, oppAxisOpts, oppAxisRang
     // add offset for crispier corners
     // https://github.com/plotly/plotly.js/pull/1409
     var offset = 0.5;
-
-    var xMin = Math.round(clampHandle(pixelMin - hw2)) - offset;
+    var grabberWidth = axisOpts._input.rangeslider.grabbersWidth || constants.handleWidth
+    var xMin = Math.round(clampHandle(pixelMin - hw2)) - grabberWidth - offset;
     var xMax = Math.round(clampHandle(pixelMax - hw2)) + offset;
 
     rangeSlider.select('g.' + constants.grabberMinClassName)
@@ -30310,11 +30329,11 @@ function drawGrabbers(rangeSlider, gd, axisOpts, opts) {
     // <g grabber />
     var grabberMin = Lib.ensureSingle(rangeSlider, 'g', constants.grabberMinClassName);
     var grabberMax = Lib.ensureSingle(rangeSlider, 'g', constants.grabberMaxClassName);
-
+    var grabberWidth = axisOpts._input.rangeslider.grabbersWidth || constants.handleWidth
     // <g handle />
     var handleFixAttrs = {
         x: 0,
-        width: constants.handleWidth,
+        width: grabberWidth,
         rx: constants.handleRadius,
         fill: Color.background,
         stroke: Color.defaultLine,
@@ -30339,11 +30358,11 @@ function drawGrabbers(rangeSlider, gd, axisOpts, opts) {
     if(gd._context.staticPlot) return;
 
     var grabAreaFixAttrs = {
-        width: constants.grabAreaWidth,
+        width: grabberWidth,
         x: 0,
         y: 0,
         fill: constants.grabAreaFill,
-        cursor: constants.grabAreaCursor
+        cursor: axisOpts._input.rangeslider.unresizeable ? constants.slideBoxCursor : constants.grabAreaCursor
     };
 
     var grabAreaMin = Lib.ensureSingle(grabberMin, 'rect', constants.grabAreaMinClassName, function(s) {
@@ -76537,7 +76556,7 @@ module.exports = function handleXYDefaults(traceIn, traceOut, layout, coerce) {
 'use strict';
 
 // package version injected by `npm run preprocess`
-exports.version = '1.54.3';
+exports.version = '1.54.5';
 
 },{}]},{},[4])(4)
 });
