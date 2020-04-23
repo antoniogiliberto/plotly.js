@@ -847,8 +847,12 @@ axes.autoTicks = function(ax, roughDTick) {
     } else {
         // auto ticks always start at 0
         ax.tick0 = 0;
-        base = getBase(10);
-        ax.dtick = roundDTick(roughDTick, base, roundBase10);
+        if(ax._input.rawDTick) {
+            ax.dtick = (roughDTick);
+        } else {
+            base = getBase(10);
+            ax.dtick = roundDTick(roughDTick, base, roundBase10);
+        }
     }
 
     // prevent infinite loops
@@ -974,7 +978,12 @@ axes.tickFirst = function(ax) {
     var tick0 = r2l(ax.tick0);
 
     if(isNumeric(dtick)) {
-        var tmin = sRound((r0 - tick0) / dtick) * dtick + tick0;
+        var tmin;
+        if(ax._input.rawDTick) {
+            tmin = rng[0];
+        } else {
+            tmin = sRound((r0 - tick0) / dtick) * dtick + tick0;
+        }
 
         // make sure no ticks outside the category list
         if(ax.type === 'category' || ax.type === 'multicategory') {

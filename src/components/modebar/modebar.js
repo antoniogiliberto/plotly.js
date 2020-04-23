@@ -15,6 +15,7 @@ var isNumeric = require('fast-isnumeric');
 var Lib = require('../../lib');
 var Icons = require('../../fonts/ploticon');
 var Parser = new DOMParser();
+// var listAxes = require('../../plots/cartesian/axis_ids').list;
 
 /**
  * UI controller for interactive plots
@@ -43,6 +44,13 @@ var proto = ModeBar.prototype;
  *
  */
 proto.update = function(graphInfo, buttons) {
+    // var rightMargin = 0;
+    // listAxes(graphInfo, 'y', true).forEach(function(yAxis) {
+    //     if(yAxis.side === 'right'){
+    //         rightMargin += 64;
+    //     }
+    // });
+    // this.element.style.right = rightMargin + 'px';
     this.graphInfo = graphInfo;
 
     var context = this.graphInfo._context;
