@@ -1,5 +1,5 @@
 /**
-* plotly.js (finance) v1.54.5
+* plotly.js (finance) v1.54.6
 * Copyright 2012-2020, Plotly, Inc.
 * All rights reserved.
 * Licensed under the MIT license
@@ -28562,6 +28562,7 @@ var isNumeric = _dereq_('fast-isnumeric');
 var Lib = _dereq_('../../lib');
 var Icons = _dereq_('../../fonts/ploticon');
 var Parser = new DOMParser();
+// var listAxes = require('../../plots/cartesian/axis_ids').list;
 
 /**
  * UI controller for interactive plots
@@ -28590,6 +28591,13 @@ var proto = ModeBar.prototype;
  *
  */
 proto.update = function(graphInfo, buttons) {
+    // var rightMargin = 0;
+    // listAxes(graphInfo, 'y', true).forEach(function(yAxis) {
+    //     if(yAxis.side === 'right'){
+    //         rightMargin += 64;
+    //     }
+    // });
+    // this.element.style.right = rightMargin + 'px';
     this.graphInfo = graphInfo;
 
     var context = this.graphInfo._context;
@@ -51591,8 +51599,12 @@ axes.autoTicks = function(ax, roughDTick) {
     } else {
         // auto ticks always start at 0
         ax.tick0 = 0;
-        base = getBase(10);
-        ax.dtick = roundDTick(roughDTick, base, roundBase10);
+        if(ax._input.rawDTick) {
+            ax.dtick = (roughDTick);
+        } else {
+            base = getBase(10);
+            ax.dtick = roundDTick(roughDTick, base, roundBase10);
+        }
     }
 
     // prevent infinite loops
@@ -51718,7 +51730,12 @@ axes.tickFirst = function(ax) {
     var tick0 = r2l(ax.tick0);
 
     if(isNumeric(dtick)) {
-        var tmin = sRound((r0 - tick0) / dtick) * dtick + tick0;
+        var tmin;
+        if(ax._input.rawDTick) {
+            tmin = rng[0];
+        } else {
+            tmin = sRound((r0 - tick0) / dtick) * dtick + tick0;
+        }
 
         // make sure no ticks outside the category list
         if(ax.type === 'category' || ax.type === 'multicategory') {
@@ -84044,7 +84061,7 @@ module.exports = {
 'use strict';
 
 // package version injected by `npm run preprocess`
-exports.version = '1.54.5';
+exports.version = '1.54.6';
 
 },{}]},{},[8])(8)
 });
