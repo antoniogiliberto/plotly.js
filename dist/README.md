@@ -432,7 +432,7 @@ The `finance` partial bundle contains trace modules `scatter`, `bar`, `histogram
 
 | Raw size | Minified size | Minified + gzip size |
 |------|-----------------|------------------------|
-| 2.7 MB | 954.7 kB | 310.3 kB |
+| 2.7 MB | 954.8 kB | 310.3 kB |
 
 #### CDN links
 
