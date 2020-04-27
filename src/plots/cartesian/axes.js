@@ -1419,8 +1419,8 @@ function numFormat(v, ax, fmtoverride, hover) {
     }
 
     if(tickformat) {
-        if(typeof tickformat === 'function'){
-            return tickformat(v);
+        if(typeof tickformat === 'function') {
+            return tickformat(v, ax);
         } else {
             return ax._numFormat(tickformat)(v).replace(/-/g, MINUS_SIGN);
         }

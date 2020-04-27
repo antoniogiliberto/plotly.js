@@ -1,5 +1,5 @@
 /**
-* plotly.js (basic) v1.54.6
+* plotly.js (basic) v1.54.8
 * Copyright 2012-2020, Plotly, Inc.
 * All rights reserved.
 * Licensed under the MIT license
@@ -52051,8 +52051,8 @@ function numFormat(v, ax, fmtoverride, hover) {
     }
 
     if(tickformat) {
-        if(typeof tickformat === 'function'){
-            return tickformat(v);
+        if(typeof tickformat === 'function') {
+            return tickformat(v, ax);
         } else {
             return ax._numFormat(tickformat)(v).replace(/-/g, MINUS_SIGN);
         }
@@ -76579,7 +76579,7 @@ module.exports = function handleXYDefaults(traceIn, traceOut, layout, coerce) {
 'use strict';
 
 // package version injected by `npm run preprocess`
-exports.version = '1.54.6';
+exports.version = '1.54.8';
 
 },{}]},{},[4])(4)
 });
