@@ -1,5 +1,5 @@
 /**
-* plotly.js (geo) v1.54.8
+* plotly.js (geo) v1.54.9
 * Copyright 2012-2020, Plotly, Inc.
 * All rights reserved.
 * Licensed under the MIT license
@@ -32743,7 +32743,7 @@ function setupDragElement(rangeSlider, gd, axisOpts, opts) {
 
         const mouseMove = (e) => {
             gd.draggingRangeSlider = true
-            var delta = +e.clientX - startX;
+            var delta = (+e.clientX - startX) * (axisOpts._input.rangeslider.speed || 1);
             var pixelMin, pixelMax, cursor;
 
             if(axisOpts._input.rangeslider.unresizeable){
@@ -78931,7 +78931,7 @@ function styleTrace(gd, calcTrace) {
 'use strict';
 
 // package version injected by `npm run preprocess`
-exports.version = '1.54.8';
+exports.version = '1.54.9';
 
 },{}]},{},[4])(4)
 });

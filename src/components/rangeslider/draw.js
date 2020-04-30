@@ -257,7 +257,7 @@ function setupDragElement(rangeSlider, gd, axisOpts, opts) {
 
         const mouseMove = (e) => {
             gd.draggingRangeSlider = true
-            var delta = +e.clientX - startX;
+            var delta = (+e.clientX - startX) * (axisOpts._input.rangeslider.speed || 1);
             var pixelMin, pixelMax, cursor;
 
             if(axisOpts._input.rangeslider.unresizeable){
