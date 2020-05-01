@@ -611,7 +611,7 @@ axes.calcTicks = function calcTicks(ax) {
     generateTicks();
     /** will try to limit the ticks based on the available width */
     if(axLetter === 'x' && isNumeric(ax.dtick)){
-        var maxTicks = ax._length / 64;
+        var maxTicks = ax._length / 60;
         if(tickVals.length > maxTicks){
             ax.dtick *= 2;
             generateTicks();

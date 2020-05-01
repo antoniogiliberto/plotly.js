@@ -1,5 +1,5 @@
 /**
-* plotly.js (gl2d) v1.54.10
+* plotly.js (gl2d) v1.54.11
 * Copyright 2012-2020, Plotly, Inc.
 * All rights reserved.
 * Licensed under the MIT license
@@ -84990,7 +84990,7 @@ axes.calcTicks = function calcTicks(ax) {
     generateTicks();
     /** will try to limit the ticks based on the available width */
     if(axLetter === 'x' && isNumeric(ax.dtick)){
-        var maxTicks = ax._length / 64;
+        var maxTicks = ax._length / 60;
         if(tickVals.length > maxTicks){
             ax.dtick *= 2;
             generateTicks();
@@ -116039,7 +116039,7 @@ module.exports = function select(searchInfo, selectionTester) {
 'use strict';
 
 // package version injected by `npm run preprocess`
-exports.version = '1.54.10';
+exports.version = '1.54.11';
 
 },{}]},{},[5])(5)
 });
