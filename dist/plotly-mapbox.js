@@ -1,5 +1,5 @@
 /**
-* plotly.js (mapbox) v1.54.9
+* plotly.js (mapbox) v1.54.10
 * Copyright 2012-2020, Plotly, Inc.
 * All rights reserved.
 * Licensed under the MIT license
@@ -54119,7 +54119,7 @@ axes.calcTicks = function calcTicks(ax) {
     generateTicks();
     /** will try to limit the ticks based on the available width */
     if(axLetter === 'x' && isNumeric(ax.dtick)){
-        var maxTicks = ax._length / 56;
+        var maxTicks = ax._length / 64;
         if(tickVals.length > maxTicks){
             ax.dtick *= 2;
             generateTicks();
@@ -79052,7 +79052,7 @@ module.exports = function selectPoints(searchInfo, selectionTester) {
 'use strict';
 
 // package version injected by `npm run preprocess`
-exports.version = '1.54.9';
+exports.version = '1.54.10';
 
 },{}]},{},[5])(5)
 });

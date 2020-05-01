@@ -1,6 +1,6 @@
 {
   "name": "@giliweb/plotly.js",
-  "version": "1.54.9",
+  "version": "1.54.10",
   "description": "The open source javascript graphing library that powers plotly",
   "license": "MIT",
   "main": "./dist/plotly.js",
