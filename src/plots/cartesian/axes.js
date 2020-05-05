@@ -1881,6 +1881,32 @@ axes.drawOne = function(gd, ax, opts) {
             tickPath = fullTickPath;
         }
 
+        if(axLetter === 'x' && ax._input.mtick){
+            let newTickVals = []
+            tickVals = [Object.assign({}, tickVals[0], { text: '', x: tickVals[0].x - ax.dtick})].concat(tickVals)
+            tickVals.forEach(tick => {
+                if(tick.x >= +(new Date(ax.range[0])) && tick.x <= +(new Date(ax.range[1]))) {
+                    newTickVals.push(tick)
+                }
+
+                let mtickValue = tick.x
+                do {
+                    mtickValue += ax._input.mtick
+
+                    if(mtickValue >= +(new Date(ax.range[0])) && mtickValue <= +(new Date(ax.range[1]))){
+                        let dt = new Date(mtickValue)
+                        newTickVals.push(Object.assign({}, tick, {
+                            x: mtickValue,
+                            text: '',
+                            temp: dt.getDate() + "-" + dt.getMonth() + "-" + dt.getFullYear()
+                        }))
+                    }
+
+                } while(mtickValue < tick.x + ax.dtick)
+            })
+            tickVals = newTickVals
+        }
+
         axes.drawTicks(gd, ax, {
             vals: tickVals,
             layer: mainAxLayer,
