@@ -1881,7 +1881,7 @@ axes.drawOne = function(gd, ax, opts) {
             tickPath = fullTickPath;
         }
 
-        if(axLetter === 'x' && ax._input.mtick){
+        if(axLetter === 'x' && ax._input.mtick && tickVals.length > 0){
             let newTickVals = []
             tickVals = [Object.assign({}, tickVals[0], { text: '', x: tickVals[0].x - ax.dtick})].concat(tickVals)
             tickVals.forEach(tick => {
