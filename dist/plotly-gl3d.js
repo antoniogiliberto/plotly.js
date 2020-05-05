@@ -1,5 +1,5 @@
 /**
-* plotly.js (gl3d) v1.55.1
+* plotly.js (gl3d) v1.55.2
 * Copyright 2012-2020, Plotly, Inc.
 * All rights reserved.
 * Licensed under the MIT license
@@ -91658,7 +91658,7 @@ axes.drawOne = function(gd, ax, opts) {
             tickPath = fullTickPath;
         }
 
-        if(axLetter === 'x' && ax._input.mtick){
+        if(axLetter === 'x' && ax._input.mtick && tickVals.length > 0){
             let newTickVals = []
             tickVals = [Object.assign({}, tickVals[0], { text: '', x: tickVals[0].x - ax.dtick})].concat(tickVals)
             tickVals.forEach(tick => {
@@ -118823,7 +118823,7 @@ module.exports = {
 'use strict';
 
 // package version injected by `npm run preprocess`
-exports.version = '1.55.1';
+exports.version = '1.55.2';
 
 },{}]},{},[4])(4)
 });
