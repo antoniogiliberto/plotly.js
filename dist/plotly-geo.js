@@ -1,5 +1,5 @@
 /**
-* plotly.js (geo) v1.55.2
+* plotly.js (geo) v1.55.3
 * Copyright 2012-2020, Plotly, Inc.
 * All rights reserved.
 * Licensed under the MIT license
@@ -31444,7 +31444,7 @@ proto.createButton = function(config) {
     var button = document.createElement('a');
 
     button.setAttribute('rel', 'tooltip');
-    button.className = 'modebar-btn';
+    button.className = 'modebar-btn' + ' modebar-btn-' + config.name;
 
     var title = config.title;
     if(title === undefined) title = config.name;
@@ -78957,7 +78957,7 @@ function styleTrace(gd, calcTrace) {
 'use strict';
 
 // package version injected by `npm run preprocess`
-exports.version = '1.55.2';
+exports.version = '1.55.3';
 
 },{}]},{},[4])(4)
 });

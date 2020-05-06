@@ -157,7 +157,7 @@ proto.createButton = function(config) {
     var button = document.createElement('a');
 
     button.setAttribute('rel', 'tooltip');
-    button.className = 'modebar-btn';
+    button.className = 'modebar-btn' + ' modebar-btn-' + config.name;
 
     var title = config.title;
     if(title === undefined) title = config.name;
