@@ -95,7 +95,7 @@ function drawRaw(gd, options, index, subplotId, xa, ya) {
         className = 'annotation-' + subplotId;
         containerStr = subplotId + '.annotations';
     } else {
-        className = 'annotation';
+        className = 'annotation' + ` ${options.name}`;
         containerStr = 'annotations';
     }
 
