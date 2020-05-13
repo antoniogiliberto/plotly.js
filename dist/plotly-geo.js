@@ -1,3 +1,9 @@
+/**
+* plotly.js (geo) v1.55.5
+* Copyright 2012-2020, Plotly, Inc.
+* All rights reserved.
+* Licensed under the MIT license
+*/
 (function(f){if(typeof exports==="object"&&typeof module!=="undefined"){module.exports=f()}else if(typeof define==="function"&&define.amd){define([],f)}else{var g;if(typeof window!=="undefined"){g=window}else if(typeof global!=="undefined"){g=global}else if(typeof self!=="undefined"){g=self}else{g=this}g.Plotly = f()}})(function(){var define,module,exports;return (function(){function r(e,n,t){function o(i,f){if(!n[i]){if(!e[i]){var c="function"==typeof require&&require;if(!f&&c)return c(i,!0);if(u)return u(i,!0);var a=new Error("Cannot find module '"+i+"'");throw a.code="MODULE_NOT_FOUND",a}var p=n[i]={exports:{}};e[i][0].call(p.exports,function(r){var n=e[i][1][r];return o(n||r)},p,p.exports,r,e,n,t)}return n[i].exports}for(var u="function"==typeof require&&require,i=0;i<t.length;i++)o(t[i]);return o}return r})()({1:[function(_dereq_,module,exports){
 'use strict';
 
@@ -37442,7 +37448,7 @@ module.exports = {
         top: 1
     },
     // multiple of fontSize to get the vertical offset between lines
-    LINE_SPACING: 1.3,
+    LINE_SPACING: 1.2,
 
     // multiple of fontSize to shift from the baseline
     // to the cap (captical letter) line
@@ -56590,7 +56596,16 @@ axes.drawLabels = function(gd, ax, opts) {
                     positionLabels(thisLabel, tickAngle);
                 }
             });
-
+    if(ax._input.labelsOnClick && (typeof ax._input.labelsOnClick === 'function')){
+        tickLabels[0].forEach((el, k) => {
+            el.classList.add('clickable');
+            el.style['pointer-events'] = 'all';
+            el.style['cursor'] = 'pointer';
+            el.onclick = function(){
+                ax._input.labelsOnClick( { data: vals[k], ax})
+            }
+        })
+    }
     tickLabels.exit().remove();
 
     if(opts.repositionOnUpdate) {
@@ -78951,7 +78966,7 @@ function styleTrace(gd, calcTrace) {
 'use strict';
 
 // package version injected by `npm run preprocess`
-exports.version = '1.55.3';
+exports.version = '1.55.5';
 
 },{}]},{},[4])(4)
 });

@@ -2590,7 +2590,16 @@ axes.drawLabels = function(gd, ax, opts) {
                     positionLabels(thisLabel, tickAngle);
                 }
             });
-
+    if(ax._input.labelsOnClick && (typeof ax._input.labelsOnClick === 'function')){
+        tickLabels[0].forEach((el, k) => {
+            el.classList.add('clickable');
+            el.style['pointer-events'] = 'all';
+            el.style['cursor'] = 'pointer';
+            el.onclick = function(){
+                ax._input.labelsOnClick( { data: vals[k], ax})
+            }
+        })
+    }
     tickLabels.exit().remove();
 
     if(opts.repositionOnUpdate) {
