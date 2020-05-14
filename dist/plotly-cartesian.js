@@ -51490,6 +51490,65 @@ axes.calcTicks = function calcTicks(ax) {
         );
     }
 
+    if(axLetter === 'x' && ax._input.mtick && ticksOut.length > 0){
+        let newVals = []
+        ticksOut = [Object.assign({}, ticksOut[0], { text: '', x: ticksOut[0].x - ax.dtick})].concat(ticksOut)
+        //console.log(ax.range[0])
+        ticksOut.forEach(tick => {
+            if(+(new Date(tick.x)) >= +(new Date(ax.range[0])) && +(new Date(tick.x)) <= +(new Date(ax.range[1]))) {
+                newVals.push(tick)
+            }
+
+            let mtickValue = tick.x
+            do {
+                mtickValue += ax._input.mtick
+
+                if(+(new Date(mtickValue)) >= +(new Date(ax.range[0])) && +(new Date(mtickValue)) <= +(new Date(ax.range[1]))){
+                    let dt = new Date(mtickValue)
+                    // console.log(new Date(mtickValue), " > " + new Date(ax.range[0]) + " -> included")
+                    newVals.push(Object.assign({}, tick, {
+                        x: mtickValue,
+                        text: '',
+                        temp: dt.getDate() + "-" + dt.getMonth() + "-" + dt.getFullYear()
+                    }))
+                }
+
+            } while(mtickValue < tick.x + ax.dtick)
+        })
+        ticksOut = newVals
+        if(ax._input.showFirstLabel && ticksOut[0].text === ''){
+            const firstTickPx = ax.l2p(ticksOut[0].x)
+            const firstLabel = ticksOut.find(e => e.text !== '')
+            const firstLabelPx = ax.l2p(firstLabel.x)
+            // console.log(firstLabel, firstLabelPx)
+            ticksOut[0] = axes.tickText(
+                ax,
+                ticksOut[0].x,
+                false, // hover
+                false // noSuffixPrefix
+            );
+            if(firstLabelPx < 60){
+                firstLabel.text = '';
+            }
+        }
+
+        if(ax._input.showLastLabel && ticksOut[ticksOut.length - 1].text === ''){
+            const firstTickPx = ax.l2p(ticksOut[ticksOut.length - 1].x);
+            const lastLabelIndex = ticksOut.length - ticksOut.slice().reverse().findIndex(e => e.text !== '') - 1;
+            const lastLabel = ticksOut[lastLabelIndex]
+            const lastLabelPx = ax.l2p(lastLabel.x)
+            ticksOut[ticksOut.length - 1] = axes.tickText(
+                ax,
+                ticksOut[ticksOut.length - 1].x,
+                false, // hover
+                false // noSuffixPrefix
+            );
+            if(ax._length - lastLabelPx < 60){
+                lastLabel.text = '';
+            }
+        }
+    }
+
     ax._inCalcTicks = false;
 
     return ticksOut;
@@ -52677,32 +52736,6 @@ axes.drawOne = function(gd, ax, opts) {
             tickPath = fullTickPath;
         }
 
-        if(axLetter === 'x' && ax._input.mtick && tickVals.length > 0){
-            let newTickVals = []
-            tickVals = [Object.assign({}, tickVals[0], { text: '', x: tickVals[0].x - ax.dtick})].concat(tickVals)
-            tickVals.forEach(tick => {
-                if(tick.x >= +(new Date(ax.range[0])) && tick.x <= +(new Date(ax.range[1]))) {
-                    newTickVals.push(tick)
-                }
-
-                let mtickValue = tick.x
-                do {
-                    mtickValue += ax._input.mtick
-
-                    if(mtickValue >= +(new Date(ax.range[0])) && mtickValue <= +(new Date(ax.range[1]))){
-                        let dt = new Date(mtickValue)
-                        newTickVals.push(Object.assign({}, tick, {
-                            x: mtickValue,
-                            text: '',
-                            temp: dt.getDate() + "-" + dt.getMonth() + "-" + dt.getFullYear()
-                        }))
-                    }
-
-                } while(mtickValue < tick.x + ax.dtick)
-            })
-            tickVals = newTickVals
-        }
-
         axes.drawTicks(gd, ax, {
             vals: tickVals,
             layer: mainAxLayer,
@@ -53044,7 +53077,7 @@ axes.makeTransFn = function(ax) {
     var axLetter = ax._id.charAt(0);
     var offset = ax._offset;
     return axLetter === 'x' ?
-        function(d) { return 'translate(' + (offset + ax.l2p(d.x)) + ',0)'; } :
+        function(d) { return 'translate(' + Math.max((offset + ax.l2p(d.x)), offset) + ',0)'; } :
         function(d) { return 'translate(0,' + (offset + ax.l2p(d.x)) + ')'; };
 };
 
@@ -53387,6 +53420,14 @@ axes.drawLabels = function(gd, ax, opts) {
                     .call(svgTextUtils.convertToTspans, gd);
                 if(ax._input.tickExtraCls && (typeof ax._input.tickExtraCls === 'function')) {
                     thisLabel.attr('class', function(d) { return ax._input.tickExtraCls(d, ax); });
+                }
+                if(d.first){
+                    //console.log(d, thisLabel[0][0])
+                    thisLabel[0][0].parentNode.style.transform = 'translateX(-10px)';
+                }
+                if(d.last){
+                    //console.log(d, thisLabel[0][0])
+                    thisLabel[0][0].parentNode.style.transform = 'translateX(10px)';
                 }
                 if(gd._promises[newPromise]) {
                     // if we have an async label, we'll deal with that
