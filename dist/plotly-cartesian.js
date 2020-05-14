@@ -1,5 +1,5 @@
 /**
-* plotly.js (cartesian) v1.55.5
+* plotly.js (cartesian) v1.55.6
 * Copyright 2012-2020, Plotly, Inc.
 * All rights reserved.
 * Licensed under the MIT license
@@ -53346,6 +53346,21 @@ axes.drawLabels = function(gd, ax, opts) {
     var axLetter = axId.charAt(0);
     var cls = opts.cls || axId + 'tick';
     var vals = opts.vals;
+    /**
+     * quick hack to prevent the jumping of the chart during a transition when the vals are temporarily empty
+     */
+    if(!vals.length){
+        vals = [{
+            axInfo: "false_674.5_",
+            dx: 0,
+            dy: 0,
+            font: "Open Sans, verdana, arial, sans-serif",
+            fontColor: "rgba(255,255,255,0)",
+            fontSize: 11,
+            text: "a<br>b",
+            x: ax._rl[0]
+        }]
+    }
     var labelFns = opts.labelFns;
     var tickAngle = opts.secondary ? 0 : ax.tickangle;
     var prevAngle = (ax._prevTickAngles || {})[cls];
@@ -88195,7 +88210,7 @@ module.exports = function style(gd) {
 'use strict';
 
 // package version injected by `npm run preprocess`
-exports.version = '1.55.5';
+exports.version = '1.55.6';
 
 },{}]},{},[11])(11)
 });

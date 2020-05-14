@@ -2550,6 +2550,21 @@ axes.drawLabels = function(gd, ax, opts) {
     var axLetter = axId.charAt(0);
     var cls = opts.cls || axId + 'tick';
     var vals = opts.vals;
+    /**
+     * quick hack to prevent the jumping of the chart during a transition when the vals are temporarily empty
+     */
+    if(!vals.length){
+        vals = [{
+            axInfo: "false_674.5_",
+            dx: 0,
+            dy: 0,
+            font: "Open Sans, verdana, arial, sans-serif",
+            fontColor: "rgba(255,255,255,0)",
+            fontSize: 11,
+            text: "a<br>b",
+            x: ax._rl[0]
+        }]
+    }
     var labelFns = opts.labelFns;
     var tickAngle = opts.secondary ? 0 : ax.tickangle;
     var prevAngle = (ax._prevTickAngles || {})[cls];
