@@ -1,5 +1,5 @@
 /**
-* plotly.js (gl3d) v1.55.6
+* plotly.js (gl3d) v1.55.8
 * Copyright 2012-2020, Plotly, Inc.
 * All rights reserved.
 * Licensed under the MIT license
@@ -90508,13 +90508,13 @@ axes.calcTicks = function calcTicks(ax) {
                 false, // hover
                 false // noSuffixPrefix
             );
-            if(firstLabelPx < 60){
+            if(firstLabelPx < 60 || firstLabelPx - firstTickPx < 60){
                 firstLabel.text = '';
             }
         }
 
         if(ax._input.showLastLabel && ticksOut[ticksOut.length - 1].text === ''){
-            const firstTickPx = ax.l2p(ticksOut[ticksOut.length - 1].x);
+            const lastTickPx = ax.l2p(ticksOut[ticksOut.length - 1].x);
             const lastLabelIndex = ticksOut.length - ticksOut.slice().reverse().findIndex(e => e.text !== '') - 1;
             const lastLabel = ticksOut[lastLabelIndex]
             const lastLabelPx = ax.l2p(lastLabel.x)
@@ -90524,7 +90524,7 @@ axes.calcTicks = function calcTicks(ax) {
                 false, // hover
                 false // noSuffixPrefix
             );
-            if(ax._length - lastLabelPx < 60){
+            if(lastTickPx - lastLabelPx < 60){
                 lastLabel.text = '';
             }
         }
@@ -118888,7 +118888,7 @@ module.exports = {
 'use strict';
 
 // package version injected by `npm run preprocess`
-exports.version = '1.55.6';
+exports.version = '1.55.8';
 
 },{}]},{},[4])(4)
 });
