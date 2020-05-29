@@ -1,5 +1,5 @@
 /**
-* plotly.js (geo) v1.55.8
+* plotly.js (geo) v1.55.9
 * Copyright 2012-2020, Plotly, Inc.
 * All rights reserved.
 * Licensed under the MIT license
@@ -19136,6 +19136,10 @@ function drawRaw(gd, options, index, subplotId, xa, ya) {
                 .style('stroke-width', strokewidth + 'px')
                 .call(Color.stroke, Color.rgb(arrowColor));
 
+            if(dashArray){
+                arrow.style("stroke-dasharray", dashArray);
+            }
+
             drawArrowHead(arrow, arrowSide, options);
 
             // the arrow dragger is a small square right at the head, then a line to the tail,
@@ -19443,7 +19447,7 @@ module.exports = function drawArrowHead(el3, ends, options) {
         var shortening = dashArray ? startBackOff + backOff : backOff;
         dashArray += (pathlen - shortening) + 'px,' + pathlen + 'px';
 
-        el3.style('stroke-dasharray', dashArray);
+        // el3.style('stroke-dasharray', dashArray);
     }
 
     function hideLine() { el3.style('stroke-dasharray', '0px,100px'); }
@@ -79022,7 +79026,7 @@ function styleTrace(gd, calcTrace) {
 'use strict';
 
 // package version injected by `npm run preprocess`
-exports.version = '1.55.8';
+exports.version = '1.55.9';
 
 },{}]},{},[4])(4)
 });

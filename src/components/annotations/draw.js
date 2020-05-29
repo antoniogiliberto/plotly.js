@@ -513,6 +513,10 @@ function drawRaw(gd, options, index, subplotId, xa, ya) {
                 .style('stroke-width', strokewidth + 'px')
                 .call(Color.stroke, Color.rgb(arrowColor));
 
+            if(dashArray){
+                arrow.style("stroke-dasharray", dashArray);
+            }
+
             drawArrowHead(arrow, arrowSide, options);
 
             // the arrow dragger is a small square right at the head, then a line to the tail,

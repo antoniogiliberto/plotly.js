@@ -120,7 +120,7 @@ module.exports = function drawArrowHead(el3, ends, options) {
         var shortening = dashArray ? startBackOff + backOff : backOff;
         dashArray += (pathlen - shortening) + 'px,' + pathlen + 'px';
 
-        el3.style('stroke-dasharray', dashArray);
+        // el3.style('stroke-dasharray', dashArray);
     }
 
     function hideLine() { el3.style('stroke-dasharray', '0px,100px'); }
