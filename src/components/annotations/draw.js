@@ -502,6 +502,7 @@ function drawRaw(gd, options, index, subplotId, xa, ya) {
 
             var strokewidth = options.arrowwidth;
             var arrowColor = options.arrowcolor;
+            var dashArray = options._input.dashArray;
             var arrowSide = options.arrowside;
 
             var arrowGroup = annGroup.append('g')

@@ -1,5 +1,5 @@
 /**
-* plotly.js (cartesian) v1.55.9
+* plotly.js (cartesian) v1.55.10
 * Copyright 2012-2020, Plotly, Inc.
 * All rights reserved.
 * Licensed under the MIT license
@@ -16413,6 +16413,7 @@ function drawRaw(gd, options, index, subplotId, xa, ya) {
 
             var strokewidth = options.arrowwidth;
             var arrowColor = options.arrowcolor;
+            var dashArray = options._input.dashArray;
             var arrowSide = options.arrowside;
 
             var arrowGroup = annGroup.append('g')
@@ -88255,7 +88256,7 @@ module.exports = function style(gd) {
 'use strict';
 
 // package version injected by `npm run preprocess`
-exports.version = '1.55.9';
+exports.version = '1.55.10';
 
 },{}]},{},[11])(11)
 });
