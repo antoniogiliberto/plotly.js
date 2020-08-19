@@ -46,7 +46,7 @@ exports.hovertemplateAttrs = function(opts, extra) {
     var descPart = describeVariables(extra);
 
     var hovertemplate = {
-        valType: 'string',
+        valType: 'any',
         role: 'info',
         dflt: '',
         editType: opts.editType || 'none',

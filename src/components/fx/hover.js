@@ -1273,13 +1273,23 @@ function getHoverLabelText(d, showCommonLabel, hovermode, fullLayout, t0, g) {
     var hovertemplateLabels = d.hovertemplateLabels || d;
     var eventData = d.eventData[0] || {};
     if(hovertemplate) {
-        text = Lib.hovertemplateString(
-            hovertemplate,
-            hovertemplateLabels,
-            d3locale,
-            eventData,
-            d.trace._meta
-        );
+        if(typeof hovertemplate === 'function') {
+            text = Lib.hovertemplateString(
+                hovertemplate(eventData, d),
+                hovertemplateLabels,
+                d3locale,
+                eventData,
+                d.trace._meta
+            );
+        } else {
+            text = Lib.hovertemplateString(
+                hovertemplate,
+                hovertemplateLabels,
+                d3locale,
+                eventData,
+                d.trace._meta
+            );
+        }
 
         text = text.replace(EXTRA_STRING_REGEX, function(match, extra) {
             // assign name for secondary text label
