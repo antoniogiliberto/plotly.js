@@ -1,5 +1,5 @@
 /**
-* plotly.js (cartesian) v1.55.10
+* plotly.js (cartesian) v1.55.12
 * Copyright 2012-2020, Plotly, Inc.
 * All rights reserved.
 * Licensed under the MIT license
@@ -23641,13 +23641,23 @@ function getHoverLabelText(d, showCommonLabel, hovermode, fullLayout, t0, g) {
     var hovertemplateLabels = d.hovertemplateLabels || d;
     var eventData = d.eventData[0] || {};
     if(hovertemplate) {
-        text = Lib.hovertemplateString(
-            hovertemplate,
-            hovertemplateLabels,
-            d3locale,
-            eventData,
-            d.trace._meta
-        );
+        if(typeof hovertemplate === 'function') {
+            text = Lib.hovertemplateString(
+                hovertemplate(eventData, d),
+                hovertemplateLabels,
+                d3locale,
+                eventData,
+                d.trace._meta
+            );
+        } else {
+            text = Lib.hovertemplateString(
+                hovertemplate,
+                hovertemplateLabels,
+                d3locale,
+                eventData,
+                d.trace._meta
+            );
+        }
 
         text = text.replace(EXTRA_STRING_REGEX, function(match, extra) {
             // assign name for secondary text label
@@ -51495,7 +51505,7 @@ axes.calcTicks = function calcTicks(ax) {
         );
     }
 
-    if(axLetter === 'x' && ax._input.mtick && ticksOut.length > 0){
+    if(axLetter === 'x' && ax._input && ax._input.mtick && ticksOut.length > 0){
         let newVals = []
         ticksOut = [Object.assign({}, ticksOut[0], { text: '', x: ticksOut[0].x - ax.dtick})].concat(ticksOut)
         //console.log(ax.range[0])
@@ -51707,7 +51717,7 @@ axes.autoTicks = function(ax, roughDTick) {
     } else {
         // auto ticks always start at 0
         ax.tick0 = 0;
-        if(ax._input.rawDTick) {
+        if(ax._input && ax._input.rawDTick) {
             ax.dtick = (roughDTick);
         } else {
             base = getBase(10);
@@ -51839,7 +51849,7 @@ axes.tickFirst = function(ax) {
 
     if(isNumeric(dtick)) {
         var tmin;
-        if(ax._input.rawDTick) {
+        if(ax._input && ax._input.rawDTick) {
             tmin = rng[0];
         } else {
             tmin = sRound((r0 - tick0) / dtick) * dtick + tick0;
@@ -53423,7 +53433,7 @@ axes.drawLabels = function(gd, ax, opts) {
                     .call(Drawing.font, d.font, d.fontSize, d.fontColor)
                     .text(d.text)
                     .call(svgTextUtils.convertToTspans, gd);
-                if(ax._input.tickExtraCls && (typeof ax._input.tickExtraCls === 'function')) {
+                if(ax._input && ax._input.tickExtraCls && (typeof ax._input.tickExtraCls === 'function')) {
                     thisLabel.attr('class', function(d) { return ax._input.tickExtraCls(d, ax); });
                 }
                 if(d.first){
@@ -53447,7 +53457,7 @@ axes.drawLabels = function(gd, ax, opts) {
                     positionLabels(thisLabel, tickAngle);
                 }
             });
-    if(ax._input.labelsOnClick && (typeof ax._input.labelsOnClick === 'function')){
+    if(ax._input && ax._input.labelsOnClick && (typeof ax._input.labelsOnClick === 'function')){
         tickLabels[0].forEach((el, k) => {
             el.classList.add('clickable');
             el.style['pointer-events'] = 'all';
@@ -67412,7 +67422,7 @@ exports.hovertemplateAttrs = function(opts, extra) {
     var descPart = describeVariables(extra);
 
     var hovertemplate = {
-        valType: 'string',
+        valType: 'any',
         
         dflt: '',
         editType: opts.editType || 'none',
@@ -88256,7 +88266,7 @@ module.exports = function style(gd) {
 'use strict';
 
 // package version injected by `npm run preprocess`
-exports.version = '1.55.10';
+exports.version = '1.55.12';
 
 },{}]},{},[11])(11)
 });

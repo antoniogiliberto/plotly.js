@@ -570,7 +570,7 @@
                     "description": "Do the hover effects highlight individual points (markers or line points) or do they highlight filled regions? If the fill is *toself* or *tonext* and there are no markers or text, then the default is *fills*, otherwise it is *points*."
                 },
                 "hovertemplate": {
-                    "valType": "string",
+                    "valType": "any",
                     "role": "info",
                     "dflt": "",
                     "editType": "none",
@@ -2626,7 +2626,7 @@
                     "description": "Sets hover text elements associated with each (x,y) pair. If a single string, the same string appears over all the data points. If an array of string, the items are mapped in order to the this trace's (x,y) coordinates. To be seen, trace `hoverinfo` must contain a *text* flag."
                 },
                 "hovertemplate": {
-                    "valType": "string",
+                    "valType": "any",
                     "role": "info",
                     "dflt": "",
                     "editType": "none",
@@ -5008,7 +5008,7 @@
                     "description": "Same as `text`."
                 },
                 "hovertemplate": {
-                    "valType": "string",
+                    "valType": "any",
                     "role": "info",
                     "dflt": "",
                     "editType": "none",
@@ -5616,7 +5616,7 @@
                     "description": "Sets the hover text formatting rule using d3 formatting mini-languages which are very similar to those in Python. See: https://github.com/d3/d3-3.x-api-reference/blob/master/Formatting.md#d3_format"
                 },
                 "hovertemplate": {
-                    "valType": "string",
+                    "valType": "any",
                     "role": "info",
                     "dflt": "",
                     "editType": "none",
@@ -6764,7 +6764,7 @@
                     "description": "Set a group of histogram traces which will have compatible bin settings. Note that traces on the same subplot and with the same *orientation* under `barmode` *stack*, *relative* and *group* are forced into the same bingroup, Using `bingroup`, traces under `barmode` *overlay* and on different axes (of the same axis type) can have compatible bin settings. Note that histogram and histogram2d* trace can share the same `bingroup`"
                 },
                 "hovertemplate": {
-                    "valType": "string",
+                    "valType": "any",
                     "role": "info",
                     "dflt": "",
                     "editType": "none",
@@ -8390,7 +8390,7 @@
                     "description": "Sets the hover text formatting rule using d3 formatting mini-languages which are very similar to those in Python. See: https://github.com/d3/d3-3.x-api-reference/blob/master/Formatting.md#d3_format"
                 },
                 "hovertemplate": {
-                    "valType": "string",
+                    "valType": "any",
                     "role": "info",
                     "dflt": "",
                     "editType": "none",
@@ -9697,7 +9697,7 @@
                     "description": "Sets the hover text formatting rule using d3 formatting mini-languages which are very similar to those in Python. See: https://github.com/d3/d3-3.x-api-reference/blob/master/Formatting.md#d3_format"
                 },
                 "hovertemplate": {
-                    "valType": "string",
+                    "valType": "any",
                     "role": "info",
                     "dflt": "",
                     "editType": "none",
@@ -10746,7 +10746,7 @@
                     "description": "Sets the hover text formatting rule using d3 formatting mini-languages which are very similar to those in Python. See: https://github.com/d3/d3-3.x-api-reference/blob/master/Formatting.md#d3_format"
                 },
                 "hovertemplate": {
-                    "valType": "string",
+                    "valType": "any",
                     "role": "info",
                     "dflt": "",
                     "editType": "none",
@@ -13306,7 +13306,7 @@
                     "description": "Do the hover effects highlight individual points (markers or line points) or do they highlight filled regions? If the fill is *toself* or *tonext* and there are no markers or text, then the default is *fills*, otherwise it is *points*."
                 },
                 "hovertemplate": {
-                    "valType": "string",
+                    "valType": "any",
                     "role": "info",
                     "dflt": "",
                     "editType": "none",
@@ -14180,7 +14180,7 @@
                     "description": "Same as `text`."
                 },
                 "hovertemplate": {
-                    "valType": "string",
+                    "valType": "any",
                     "role": "info",
                     "dflt": "",
                     "editType": "none",
@@ -14737,7 +14737,7 @@
                     "description": "Sets hover text elements associated with each (x,y) pair. If a single string, the same string appears over all the data points. If an array of string, the items are mapped in order to the this trace's (x,y) coordinates. To be seen, trace `hoverinfo` must contain a *text* flag."
                 },
                 "hovertemplate": {
-                    "valType": "string",
+                    "valType": "any",
                     "role": "info",
                     "dflt": "",
                     "editType": "none",
@@ -16195,7 +16195,7 @@
                     "description": "Sets hover text elements associated with each (x,y) pair. If a single string, the same string appears over all the data points. If an array of string, the items are mapped in order to the this trace's (x,y) coordinates. To be seen, trace `hoverinfo` must contain a *text* flag."
                 },
                 "hovertemplate": {
-                    "valType": "string",
+                    "valType": "any",
                     "role": "info",
                     "dflt": "",
                     "editType": "none",
@@ -17108,7 +17108,7 @@
                     "description": "Determines which trace information appear on hover. If `none` or `skip` are set, no information is displayed upon hovering. But, if `none` is set, click and hover events are still fired."
                 },
                 "hovertemplate": {
-                    "valType": "string",
+                    "valType": "any",
                     "role": "info",
                     "dflt": "",
                     "editType": "none",
@@ -17536,7 +17536,7 @@
                     "description": "Determines which trace information appear on hover. If `none` or `skip` are set, no information is displayed upon hovering. But, if `none` is set, click and hover events are still fired."
                 },
                 "hovertemplate": {
-                    "valType": "string",
+                    "valType": "any",
                     "role": "info",
                     "dflt": "",
                     "editType": "none",
@@ -19014,7 +19014,7 @@
                     "description": "Determines which trace information appear on hover. If `none` or `skip` are set, no information is displayed upon hovering. But, if `none` is set, click and hover events are still fired."
                 },
                 "hovertemplate": {
-                    "valType": "string",
+                    "valType": "any",
                     "role": "info",
                     "dflt": "",
                     "editType": "none",
@@ -20443,7 +20443,7 @@
                     "description": "Determines which trace information appear on hover. If `none` or `skip` are set, no information is displayed upon hovering. But, if `none` is set, click and hover events are still fired."
                 },
                 "hovertemplate": {
-                    "valType": "string",
+                    "valType": "any",
                     "role": "info",
                     "dflt": "",
                     "editType": "none",
@@ -21119,7 +21119,7 @@
                     "description": "Determines which trace information appear on hover. If `none` or `skip` are set, no information is displayed upon hovering. But, if `none` is set, click and hover events are still fired."
                 },
                 "hovertemplate": {
-                    "valType": "string",
+                    "valType": "any",
                     "role": "info",
                     "dflt": "",
                     "editType": "none",
@@ -21746,7 +21746,7 @@
                     "description": "Sets text elements associated with each (x,y,z) triplet. If a single string, the same string appears over all the data points. If an array of string, the items are mapped in order to the this trace's (x,y,z) coordinates. To be seen, trace `hoverinfo` must contain a *text* flag."
                 },
                 "hovertemplate": {
-                    "valType": "string",
+                    "valType": "any",
                     "role": "info",
                     "dflt": "",
                     "editType": "calc",
@@ -24060,7 +24060,7 @@
                     "editType": "calc"
                 },
                 "hovertemplate": {
-                    "valType": "string",
+                    "valType": "any",
                     "role": "info",
                     "dflt": "",
                     "editType": "calc",
@@ -25744,7 +25744,7 @@
                     "editType": "calc"
                 },
                 "hovertemplate": {
-                    "valType": "string",
+                    "valType": "any",
                     "role": "info",
                     "dflt": "",
                     "editType": "calc",
@@ -27049,7 +27049,7 @@
                     "editType": "calc"
                 },
                 "hovertemplate": {
-                    "valType": "string",
+                    "valType": "any",
                     "role": "info",
                     "dflt": "",
                     "editType": "calc",
@@ -28126,7 +28126,7 @@
                     "description": "Same as `text`."
                 },
                 "hovertemplate": {
-                    "valType": "string",
+                    "valType": "any",
                     "role": "info",
                     "dflt": "",
                     "editType": "calc",
@@ -29387,7 +29387,7 @@
                     "description": "Same as `text`."
                 },
                 "hovertemplate": {
-                    "valType": "string",
+                    "valType": "any",
                     "role": "info",
                     "dflt": "",
                     "editType": "calc",
@@ -30494,7 +30494,7 @@
                     "description": "Same as `text`."
                 },
                 "hovertemplate": {
-                    "valType": "string",
+                    "valType": "any",
                     "role": "info",
                     "dflt": "",
                     "editType": "calc",
@@ -32901,7 +32901,7 @@
                     "description": "Determines which trace information appear on hover. If `none` or `skip` are set, no information is displayed upon hovering. But, if `none` is set, click and hover events are still fired."
                 },
                 "hovertemplate": {
-                    "valType": "string",
+                    "valType": "any",
                     "role": "info",
                     "dflt": "",
                     "editType": "calc",
@@ -33363,7 +33363,7 @@
                     "description": "Determines which trace information appear on hover. If `none` or `skip` are set, no information is displayed upon hovering. But, if `none` is set, click and hover events are still fired."
                 },
                 "hovertemplate": {
-                    "valType": "string",
+                    "valType": "any",
                     "role": "info",
                     "dflt": "",
                     "editType": "none",
@@ -35598,7 +35598,7 @@
                     "description": "Sets the opacity of the trace."
                 },
                 "hovertemplate": {
-                    "valType": "string",
+                    "valType": "any",
                     "role": "info",
                     "dflt": "",
                     "editType": "none",
@@ -36303,7 +36303,7 @@
                     "description": "Same as `text`."
                 },
                 "hovertemplate": {
-                    "valType": "string",
+                    "valType": "any",
                     "role": "info",
                     "dflt": "",
                     "editType": "none",
@@ -40125,7 +40125,7 @@
                     "description": "Sets the hover interaction mode for the parcats diagram. If `category`, hover interaction take place per category. If `color`, hover interactions take place per color per category. If `dimension`, hover interactions take place across all categories per dimension."
                 },
                 "hovertemplate": {
-                    "valType": "string",
+                    "valType": "any",
                     "role": "info",
                     "dflt": "",
                     "editType": "plot",
@@ -40879,7 +40879,7 @@
                         "description": "Sets the shape of the paths. If `linear`, paths are composed of straight lines. If `hspline`, paths are composed of horizontal curved splines"
                     },
                     "hovertemplate": {
-                        "valType": "string",
+                        "valType": "any",
                         "role": "info",
                         "dflt": "",
                         "editType": "plot",
@@ -42028,7 +42028,7 @@
                     "description": "Determines which trace information appear on hover. If `none` or `skip` are set, no information is displayed upon hovering. But, if `none` is set, click and hover events are still fired."
                 },
                 "hovertemplate": {
-                    "valType": "string",
+                    "valType": "any",
                     "role": "info",
                     "dflt": "",
                     "editType": "calc",
@@ -42473,7 +42473,7 @@
                     "description": "Determines which trace information appear on hover. If `none` or `skip` are set, no information is displayed upon hovering. But, if `none` is set, click and hover events are still fired."
                 },
                 "hovertemplate": {
-                    "valType": "string",
+                    "valType": "any",
                     "role": "info",
                     "dflt": "",
                     "editType": "none",
@@ -43409,7 +43409,7 @@
                     "description": "Determines which trace information appear on hover. If `none` or `skip` are set, no information is displayed upon hovering. But, if `none` is set, click and hover events are still fired."
                 },
                 "hovertemplate": {
-                    "valType": "string",
+                    "valType": "any",
                     "role": "info",
                     "dflt": "",
                     "editType": "none",
@@ -44633,7 +44633,7 @@
                         }
                     },
                     "hovertemplate": {
-                        "valType": "string",
+                        "valType": "any",
                         "role": "info",
                         "dflt": "",
                         "editType": "calc",
@@ -44877,7 +44877,7 @@
                         }
                     },
                     "hovertemplate": {
-                        "valType": "string",
+                        "valType": "any",
                         "role": "info",
                         "dflt": "",
                         "editType": "calc",
@@ -49603,7 +49603,7 @@
                     "description": "Do the hover effects highlight individual points (markers or line points) or do they highlight filled regions? If the fill is *toself* or *tonext* and there are no markers or text, then the default is *fills*, otherwise it is *points*."
                 },
                 "hovertemplate": {
-                    "valType": "string",
+                    "valType": "any",
                     "role": "info",
                     "dflt": "",
                     "editType": "none",
@@ -53383,7 +53383,7 @@
                     "description": "Do the hover effects highlight individual points (markers or line points) or do they highlight filled regions? If the fill is *toself* or *tonext* and there are no markers or text, then the default is *fills*, otherwise it is *points*."
                 },
                 "hovertemplate": {
-                    "valType": "string",
+                    "valType": "any",
                     "role": "info",
                     "dflt": "",
                     "editType": "none",
@@ -53868,7 +53868,7 @@
                     "description": "Sets hover text elements associated with each (x,y) pair. If a single string, the same string appears over all the data points. If an array of string, the items are mapped in order to the this trace's (x,y) coordinates. To be seen, trace `hoverinfo` must contain a *text* flag."
                 },
                 "hovertemplate": {
-                    "valType": "string",
+                    "valType": "any",
                     "role": "info",
                     "dflt": "",
                     "editType": "none",
@@ -56278,7 +56278,7 @@
                     "description": "Determines which trace information appear on hover. If `none` or `skip` are set, no information is displayed upon hovering. But, if `none` is set, click and hover events are still fired."
                 },
                 "hovertemplate": {
-                    "valType": "string",
+                    "valType": "any",
                     "role": "info",
                     "dflt": "",
                     "editType": "none",

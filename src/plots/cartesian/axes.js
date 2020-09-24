@@ -694,7 +694,7 @@ axes.calcTicks = function calcTicks(ax) {
         );
     }
 
-    if(axLetter === 'x' && ax._input.mtick && ticksOut.length > 0){
+    if(axLetter === 'x' && ax._input && ax._input.mtick && ticksOut.length > 0){
         let newVals = []
         ticksOut = [Object.assign({}, ticksOut[0], { text: '', x: ticksOut[0].x - ax.dtick})].concat(ticksOut)
         //console.log(ax.range[0])
@@ -906,7 +906,7 @@ axes.autoTicks = function(ax, roughDTick) {
     } else {
         // auto ticks always start at 0
         ax.tick0 = 0;
-        if(ax._input.rawDTick) {
+        if(ax._input && ax._input.rawDTick) {
             ax.dtick = (roughDTick);
         } else {
             base = getBase(10);
@@ -1038,7 +1038,7 @@ axes.tickFirst = function(ax) {
 
     if(isNumeric(dtick)) {
         var tmin;
-        if(ax._input.rawDTick) {
+        if(ax._input && ax._input.rawDTick) {
             tmin = rng[0];
         } else {
             tmin = sRound((r0 - tick0) / dtick) * dtick + tick0;
@@ -2622,7 +2622,7 @@ axes.drawLabels = function(gd, ax, opts) {
                     .call(Drawing.font, d.font, d.fontSize, d.fontColor)
                     .text(d.text)
                     .call(svgTextUtils.convertToTspans, gd);
-                if(ax._input.tickExtraCls && (typeof ax._input.tickExtraCls === 'function')) {
+                if(ax._input && ax._input.tickExtraCls && (typeof ax._input.tickExtraCls === 'function')) {
                     thisLabel.attr('class', function(d) { return ax._input.tickExtraCls(d, ax); });
                 }
                 if(d.first){
@@ -2646,7 +2646,7 @@ axes.drawLabels = function(gd, ax, opts) {
                     positionLabels(thisLabel, tickAngle);
                 }
             });
-    if(ax._input.labelsOnClick && (typeof ax._input.labelsOnClick === 'function')){
+    if(ax._input && ax._input.labelsOnClick && (typeof ax._input.labelsOnClick === 'function')){
         tickLabels[0].forEach((el, k) => {
             el.classList.add('clickable');
             el.style['pointer-events'] = 'all';
