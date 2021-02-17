@@ -32418,8 +32418,13 @@ function setupDragElement(rangeSlider, gd, axisOpts, opts) {
 }
 
 function setDataRange(rangeSlider, gd, axisOpts, opts) {
+    /**
+     * this will prevent the slider to exceed the max x value for the longest trace
+     */
+    var maxes = gd._fullData.map(e => e._extremes.x.max[0].val)
+    var max = Math.max(...maxes)
     function clamp(v) {
-        return axisOpts.l2r(Lib.constrain(v, opts._rl[0], opts._rl[1]));
+        return axisOpts.l2r(Lib.constrain(v, opts._rl[0], max));
     }
 
     var dataMin = clamp(opts.p2d(opts._pixelMin));
@@ -79157,7 +79162,7 @@ module.exports = function selectPoints(searchInfo, selectionTester) {
 'use strict';
 
 // package version injected by `npm run preprocess`
-exports.version = '1.55.12';
+exports.version = '1.55.14';
 
 },{}]},{},[5])(5)
 });
