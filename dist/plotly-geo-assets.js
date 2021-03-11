@@ -78,7 +78,7 @@ exports.topojson = saneTopojson;
 'use strict';
 
 // package version injected by `npm run preprocess`
-exports.version = '1.55.14';
+exports.version = '1.55.15';
 
 },{}]},{},[16])(16)
 });

@@ -76000,6 +76000,33 @@ function plotOne(gd, idx, plotinfo, cdscatter, cdscatterAll, element, transition
             simplify: line.simplify,
             fill: trace.fill
         });
+    
+        try {
+            const newSegments = []
+            const ds = segments[0].map(function(e, k){
+                if(k >= 1){
+                    return Math.abs(Math.abs(segments[0][k][0]) - Math.abs(segments[0][k - 1][0]))
+                } else {
+                    return 0
+                }
+            })
+            const d = Math.max(...ds)
+            if(d >= 2){
+                for(let i = 0; i < segments.length; i++){
+                    const segment = segments[i]
+                    newSegments[i] = []
+                    for(let j = 0; j < segment.length; j++){
+                        const x = segment[j][0]
+                        const y = segment[j][1]
+                        newSegments[i].push([x, y])
+                        newSegments[i].push([x + Math.max(1, d - 3), 1000])
+                    }
+                }
+                segments = newSegments
+            }
+        } catch(e){
+            console.warn(e)
+        }
 
         // since we already have the pixel segments here, use them to make
         // polygons for hover on fill
@@ -76689,7 +76716,7 @@ module.exports = function handleXYDefaults(traceIn, traceOut, layout, coerce) {
 'use strict';
 
 // package version injected by `npm run preprocess`
-exports.version = '1.55.14';
+exports.version = '1.55.15';
 
 },{}]},{},[4])(4)
 });
