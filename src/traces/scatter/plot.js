@@ -242,8 +242,8 @@ function plotOne(gd, idx, plotinfo, cdscatter, cdscatterAll, element, transition
                     for(let j = 0; j < segment.length; j++){
                         const x = segment[j][0]
                         const y = segment[j][1]
-                        newSegments[i].push([x, y])
-                        newSegments[i].push([x + Math.max(1, d - 3), 1000])
+                        newSegments[i].push([x + .5, y])
+                        newSegments[i].push([x + Math.max(.5, d - .5), 1000])
                     }
                 }
                 segments = newSegments
