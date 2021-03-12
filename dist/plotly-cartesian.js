@@ -86103,7 +86103,7 @@ function plotOne(gd, idx, plotinfo, cdscatter, cdscatterAll, element, transition
         });
     
         try {
-            if(trace._input.padding){
+            if(trace._input.padding && segments[0].length > 4){
                 const newSegments = []
                 const ds = segments[0].map(function(e, k){
                     if(k >= 1){
@@ -88300,7 +88300,7 @@ module.exports = function style(gd) {
 'use strict';
 
 // package version injected by `npm run preprocess`
-exports.version = '1.55.19';
+exports.version = '1.55.20';
 
 },{}]},{},[11])(11)
 });
