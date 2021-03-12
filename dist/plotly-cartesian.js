@@ -86103,27 +86103,29 @@ function plotOne(gd, idx, plotinfo, cdscatter, cdscatterAll, element, transition
         });
     
         try {
-            const newSegments = []
-            const ds = segments[0].map(function(e, k){
-                if(k >= 1){
-                    return Math.abs(Math.abs(segments[0][k][0]) - Math.abs(segments[0][k - 1][0]))
-                } else {
-                    return 0
-                }
-            })
-            const d = Math.max(...ds)
-            if(d >= 2){
-                for(let i = 0; i < segments.length; i++){
-                    const segment = segments[i]
-                    newSegments[i] = []
-                    for(let j = 0; j < segment.length; j++){
-                        const x = segment[j][0]
-                        const y = segment[j][1]
-                        newSegments[i].push([x + .5, y])
-                        newSegments[i].push([x + Math.max(.5, d - .5), 1000])
+            if(trace._input.padding){
+                const newSegments = []
+                const ds = segments[0].map(function(e, k){
+                    if(k >= 1){
+                        return Math.abs(Math.abs(segments[0][k][0]) - Math.abs(segments[0][k - 1][0]))
+                    } else {
+                        return 0
                     }
+                })
+                const d = Math.max(...ds)
+                if(d >= 2){
+                    for(let i = 0; i < segments.length; i++){
+                        const segment = segments[i]
+                        newSegments[i] = []
+                        for(let j = 0; j < segment.length; j++){
+                            const x = segment[j][0]
+                            const y = segment[j][1]
+                            newSegments[i].push([x + trace._input.padding, y])
+                            newSegments[i].push([x + Math.max(trace._input.padding, d - trace._input.padding), 1000])
+                        }
+                    }
+                    segments = newSegments
                 }
-                segments = newSegments
             }
         } catch(e){
             console.warn(e)
@@ -88298,7 +88300,7 @@ module.exports = function style(gd) {
 'use strict';
 
 // package version injected by `npm run preprocess`
-exports.version = '1.55.18';
+exports.version = '1.55.19';
 
 },{}]},{},[11])(11)
 });
