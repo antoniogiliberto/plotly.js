@@ -25084,6 +25084,29 @@ function _hover(gd, evt, subplot, noHoverEvent) {
                 xval = xvalArray[subploti];
                 yval = yvalArray[subploti];
             }
+    
+            if(trace.type === 'scatter' && trace.line.shape && trace.dx && [7 * 86.4e6, 86.4e6].includes(trace.dx)){
+                var x0 = +(new Date(trace.x0))
+                var x1 = +(new Date(trace.x0)) + (trace.dx * trace.y.length)
+                var realYIndex = Math.floor((xval - x0) / (x1 - x0) * trace.y.length)
+                var realY = trace.y[realYIndex]
+        
+                function getMonday(d) {
+                    d = new Date(d);
+                    var day = d.getDay(),
+                        diff = d.getDate() - day + (day === 0 ? -6 : 1); // adjust when day is sunday
+                    d.setHours(0, 0, 0, 0)
+                    return new Date(d.setDate(diff));
+                }
+                var realX
+                if(trace.dx === 7 * 86.4e6){
+                    realX = getMonday(xval)
+                } else if(trace.dx === 86.4e6) {
+                    realX = +(new Date(xval)).setHours(0, 0, 0, 0)
+                }
+                yval = realY
+                xval = +realX
+            }
 
             // Now if there is range to look in, find the points to hover.
             if(hoverdistance !== 0) {
@@ -79192,7 +79215,7 @@ module.exports = function selectPoints(searchInfo, selectionTester) {
 'use strict';
 
 // package version injected by `npm run preprocess`
-exports.version = '1.55.20';
+exports.version = '1.55.21';
 
 },{}]},{},[5])(5)
 });
