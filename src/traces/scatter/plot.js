@@ -224,28 +224,27 @@ function plotOne(gd, idx, plotinfo, cdscatter, cdscatterAll, element, transition
             simplify: line.simplify,
             fill: trace.fill
         });
-    
+
         try {
-            if(trace._input.padding && segments[0].length > 4){
+            if(trace._input.padding && segments[0].length > 1){
                 const newSegments = []
-                const ds = segments[0].map(function(e, k){
-                    if(k >= 1){
-                        return Math.abs(Math.abs(segments[0][k][0]) - Math.abs(segments[0][k - 1][0]))
-                    } else {
-                        return 0
-                    }
-                })
-                const d = Math.max(...ds)
+                const x0p = plotinfo.xaxis.d2p(trace.x0)
+                const x1p = plotinfo.xaxis.d2p(+(new Date(trace.x0)) + trace.dx)
+
+                const d = x1p - x0p
                 if(d >= 2){
                     for(let i = 0; i < segments.length; i++){
                         const segment = segments[i]
                         newSegments[i] = []
+
                         for(let j = 0; j < segment.length; j++){
                             const x = segment[j][0]
                             const y = segment[j][1]
                             newSegments[i].push([x + trace._input.padding, y])
-                            newSegments[i].push([x + Math.max(trace._input.padding, d - trace._input.padding), 1000])
+                            newSegments[i].push([x + Math.max(trace._input.padding, d - trace._input.padding), 2000])
                         }
+                        // console.log(JSON.parse(JSON.stringify(segment)))
+                        // console.log(JSON.parse(JSON.stringify(newSegments[i])))
                     }
                     segments = newSegments
                 }

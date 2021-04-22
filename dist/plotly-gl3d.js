@@ -61622,30 +61622,31 @@ function _hover(gd, evt, subplot, noHoverEvent) {
                 xval = xvalArray[subploti];
                 yval = yvalArray[subploti];
             }
-    
-            if(trace.type === 'scatter' && trace.line.shape && trace.dx && [7 * 86.4e6, 86.4e6].includes(trace.dx)){
-                var x0 = +(new Date(trace.x0))
-                var x1 = +(new Date(trace.x0)) + (trace.dx * trace.y.length)
-                var realYIndex = Math.floor((xval - x0) / (x1 - x0) * trace.y.length)
-                var realY = trace.y[realYIndex]
-        
-                function getMonday(d) {
-                    d = new Date(d);
-                    var day = d.getDay(),
-                        diff = d.getDate() - day + (day === 0 ? -6 : 1); // adjust when day is sunday
-                    d.setHours(0, 0, 0, 0)
-                    return new Date(d.setDate(diff));
-                }
-                var realX
-                if(trace.dx === 7 * 86.4e6){
-                    realX = getMonday(xval)
-                } else if(trace.dx === 86.4e6) {
-                    realX = +(new Date(xval)).setHours(0, 0, 0, 0)
-                }
-                yval = realY
-                xval = +realX
-            }
 
+            // temporarily commented out cos it doesn't work properly when multiple traces visible
+            // if(trace.type === 'scatter' && trace.line.shape && trace.dx && [7 * 86.4e6, 86.4e6].includes(trace.dx)){
+            //     var x0 = +(new Date(trace.x0))
+            //     var x1 = +(new Date(trace.x0)) + (trace.dx * trace.y.length)
+            //     var realYIndex = Math.floor((xval - x0) / (x1 - x0) * trace.y.length)
+            //     var realY = trace.y[realYIndex]
+            //
+            //     function getMonday(d) {
+            //         d = new Date(d);
+            //         var day = d.getDay(),
+            //             diff = d.getDate() - day + (day === 0 ? -6 : 1); // adjust when day is sunday
+            //         d.setHours(0, 0, 0, 0)
+            //         return new Date(d.setDate(diff));
+            //     }
+            //     var realX
+            //     if(trace.dx === 7 * 86.4e6){
+            //         realX = getMonday(xval)
+            //     } else if(trace.dx === 86.4e6) {
+            //         realX = +(new Date(xval)).setHours(0, 0, 0, 0)
+            //     }
+            //     yval = realY
+            //     xval = +realX
+            // }
+            //
             // Now if there is range to look in, find the points to hover.
             if(hoverdistance !== 0) {
                 if(trace._module && trace._module.hoverPoints) {
@@ -116048,28 +116049,27 @@ function plotOne(gd, idx, plotinfo, cdscatter, cdscatterAll, element, transition
             simplify: line.simplify,
             fill: trace.fill
         });
-    
+
         try {
-            if(trace._input.padding && segments[0].length > 4){
+            if(trace._input.padding && segments[0].length > 1){
                 const newSegments = []
-                const ds = segments[0].map(function(e, k){
-                    if(k >= 1){
-                        return Math.abs(Math.abs(segments[0][k][0]) - Math.abs(segments[0][k - 1][0]))
-                    } else {
-                        return 0
-                    }
-                })
-                const d = Math.max(...ds)
+                const x0p = plotinfo.xaxis.d2p(trace.x0)
+                const x1p = plotinfo.xaxis.d2p(+(new Date(trace.x0)) + trace.dx)
+
+                const d = x1p - x0p
                 if(d >= 2){
                     for(let i = 0; i < segments.length; i++){
                         const segment = segments[i]
                         newSegments[i] = []
+
                         for(let j = 0; j < segment.length; j++){
                             const x = segment[j][0]
                             const y = segment[j][1]
                             newSegments[i].push([x + trace._input.padding, y])
-                            newSegments[i].push([x + Math.max(trace._input.padding, d - trace._input.padding), 1000])
+                            newSegments[i].push([x + Math.max(trace._input.padding, d - trace._input.padding), 2000])
                         }
+                        // console.log(JSON.parse(JSON.stringify(segment)))
+                        // console.log(JSON.parse(JSON.stringify(newSegments[i])))
                     }
                     segments = newSegments
                 }
